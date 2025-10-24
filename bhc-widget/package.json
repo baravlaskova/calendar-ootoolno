@@ -1,0 +1,26 @@
+{
+  "name": "bhc-widget",
+  "version": "1.0.0",
+  "description": "BetterHotel Calendar Widget - Embeddable availability calendar",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "calendar",
+    "hotel",
+    "booking",
+    "availability",
+    "widget"
+  ],
+  "author": "BetterHotel Calendar Widget",
+  "license": "MIT"
+}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Disabled Dates Functionality</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .test-title {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #007cba;
+            padding-bottom: 10px;
+        }
+        
+        .test-description {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #007cba;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .test-steps {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .test-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .test-steps li {
+            margin-bottom: 8px;
+        }
+        
+        .calendar-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        #bhc-calendar {
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .status-info {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin-top: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .status-info h4 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        
+        .status-info p {
+            margin: 5px 0;
+            color: #0c5460;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .legend-color.available { background: #374151; }
+        .legend-color.disabled { background: #d1d5db; opacity: 0.6; }
+        .legend-color.disabled-checkin { background: #f3f4f6; border: 1px dashed #9ca3af; }
+        .legend-color.out-of-range { background: #374151; opacity: 0.7; }
+        .legend-color.out-of-range-checkin { background: #f3f4f6; border: 1px dashed #9ca3af; }
+        .legend-color.checkout-only { background: #7c3aed; }
+        .legend-color.selected { background: #3b82f6; }
+        .legend-color.past { background: #d1d5db; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test - Disabled Dates Functionality</h1>
+        
+        <div class="test-section">
+            <h2 class="test-title">Test Case 1: Výběr termínu příjezdu</h2>
+            <div class="test-description">
+                <strong>Popis:</strong> Ve stavu disabled jsou všechny termíny, které není možné vybrat pro příjezd. 
+                Jejich stav může vypadat vizuálně úplně stejně jako termíny v minulosti.
+            </div>
+            <div class="test-steps">
+                <strong>Testovací kroky:</strong>
+                <ol>
+                    <li>Otevřete kalendář</li>
+                    <li>Zkuste kliknout na termíny v minulosti - měly by být disabled</li>
+                    <li>Zkuste kliknout na termíny s červenou tečkou (•) - měly by být disabled</li>
+                    <li>Zkuste kliknout na nedostupné termíny - měly by být disabled</li>
+                    <li>Pouze dostupné termíny bez červené tečky by měly být klikatelné</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2 class="test-title">Test Case 2: Výběr termínu odjezdu</h2>
+            <div class="test-description">
+                <strong>Popis:</strong> Jakmile vyberu termín příjezdu a chystám se na výběr termínu odjezdu, 
+                termíny mimo rozsah budou mít normální vzhled (nebudou zašedlé), ale nebudou klikatelné. 
+                Pouze termíny v povoleném rozsahu budou klikatelné.
+            </div>
+            <div class="test-steps">
+                <strong>Testovací kroky:</strong>
+                <ol>
+                    <li>Vyberte termín příjezdu (např. 5.11.)</li>
+                    <li>Všimněte si, že termíny po maximálním možném termínu odjezdu mají normální vzhled (nejsou zašedlé)</li>
+                    <li>Tyto termíny mimo rozsah nejsou klikatelné pro výběr odjezdu</li>
+                    <li>Termíny s červenou tečkou (•) by měly být dostupné pouze pro odjezd</li>
+                    <li>Zkuste vybrat termín odjezdu v povoleném rozsahu</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2 class="test-title">Test Case 3: Výběr nového termínu příjezdu</h2>
+            <div class="test-description">
+                <strong>Popis:</strong> Pokud kliknu na něco ve stavu disabled, co ovšem mohu vybrat pro příjezd, 
+                zruší se termín příjezdu a vybere se tím nový termín příjezdu.
+            </div>
+            <div class="test-steps">
+                <strong>Testovací kroky:</strong>
+                <ol>
+                    <li>Vyberte termín příjezdu (např. 5.11.)</li>
+                    <li>Klikněte na termín mimo rozsah, který by mohl být příjezdem (např. 9.11.)</li>
+                    <li>Termín příjezdu by se měl změnit na nový vybraný termín</li>
+                    <li>Termín odjezdu by se měl vymazat</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="calendar-container">
+            <div id="bhc-calendar"></div>
+        </div>
+        
+        <div class="status-info">
+            <h4>Legenda stavů termínů:</h4>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color available"></div>
+                    <span>Dostupný pro příjezd</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color disabled"></div>
+                    <span>Disabled (nedostupný)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color disabled-checkin"></div>
+                    <span>Disabled, ale může být příjezd</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color out-of-range"></div>
+                    <span>Mimo rozsah (normální vzhled)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color out-of-range-checkin"></div>
+                    <span>Mimo rozsah, ale může být příjezd</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color checkout-only"></div>
+                    <span>Dostupný pouze pro odjezd</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color selected"></div>
+                    <span>Vybraný termín</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color past"></div>
+                    <span>Minulý termín</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-info">
+            <h4>Příklad použití:</h4>
+            <p><strong>Příklad:</strong> V našem kalendáři vyberu 5.11. jako den příjezdu. 
+            Nejvzdálenější termín, který mohu vybrat pro odjezd je 8.11. 
+            Proto tento termín přestane být disabled a mohu ho vybrat pro den odjedu také. 
+            Vše ostatní od 9.11. včetně bude ve stavu disabled.</p>
+        </div>
+    </div>
+
+    <!-- Load the calendar widget -->
+    <script type="module" src="./src/bhc-widget.js"></script>
+    <script type="module" src="./src/demo.js"></script>
+</body>
+</html>
