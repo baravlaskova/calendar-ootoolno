@@ -158,7 +158,8 @@
     clientId: '1441',
     persons: 2,
     currency: 'CZK',
-    locale: 'cs-CZ'
+    locale: 'cs-CZ',
+    pricePerNight: 1000
   });
 &lt;/script&gt;
             </div>
@@ -183,6 +184,7 @@ BHC.createCalendar({
   persons: 2,                          // Počet osob
   currency: 'CZK',                     // Měna
   locale: 'cs-CZ',                     // Lokalizace
+  pricePerNight: 1000,                 // Pevná cena za noc
   minNights: 1,                        // Minimální počet nocí
   maxNights: 30,                       // Maximální počet nocí
   cacheTtlMs: 24*60*60*1000              // Cache TTL (24 hodiny)
@@ -195,6 +197,7 @@ BHC.createCalendar({
             <ul class="feature-list">
                 <li>Zobrazení dostupnosti z BetterHotel API</li>
                 <li>Výběr rozsahu pobytu (check-in, check-out)</li>
+                <li>Automatický výpočet ceny za noc</li>
                 <li>Respektování turn-over pravidla</li>
                 <li>Kontrola close_to_arrival na startu</li>
                 <li>Výpočet ceny (quote API + fallback)</li>
@@ -213,6 +216,7 @@ BHC.createCalendar({
                 <ol>
                     <li><strong>Výběr přes hranici měsíce</strong> - Vyberte datum příjezdu na konci měsíce a odjezdu na začátku dalšího</li>
                     <li><strong>Checkout-only dny</strong> - Vyberte příjezd a pak klikněte na den s červenou tečkou (•) - měl by být fialový</li>
+                    <li><strong>Výpočet ceny</strong> - Vyberte termín a ověřte automatický výpočet ceny pod kalendářem</li>
                     <li><strong>Fallback pricing</strong> - Pokud quote API selže, měl by se použít sum_nightly</li>
                     <li><strong>Minimální pobyt</strong> - Vyberte pobyt kratší než minNights</li>
                     <li><strong>Lokalizace</strong> - Přepněte mezi češtinou a angličtinou</li>
@@ -237,7 +241,8 @@ BHC.createCalendar({
     clientId: '1441',
     persons: 2,
     currency: 'CZK',
-    locale: 'cs-CZ'
+    locale: 'cs-CZ',
+    pricePerNight: 1000
   });
 &lt;/script&gt;
             </div>

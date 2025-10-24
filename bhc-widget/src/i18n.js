@@ -27,6 +27,11 @@ export const texts = {
     nights: 'nocí',
     night: 'noc',
     nights2to4: 'noci',
+    pricePerNight: 'za noc',
+    totalPrice: 'Celková cena',
+    priceCalculation: 'Výpočet ceny',
+    priceFromApi: 'Cena z API',
+    priceFallback: 'Cena z fallback',
     
     
     // Errors
@@ -92,6 +97,11 @@ export const texts = {
     nights: 'nights',
     night: 'night',
     nights2to4: 'nights',
+    pricePerNight: 'per night',
+    totalPrice: 'Total price',
+    priceCalculation: 'Price calculation',
+    priceFromApi: 'Price from API',
+    priceFallback: 'Fallback price',
     
     
     // Errors

@@ -26,9 +26,72 @@ BHC.createCalendar({
   clientId: '1441',
   persons: 2,
   currency: 'CZK',
+  locale: 'cs-CZ',
+  pricePerNight: 1000 // Pevná cena za noc v CZK
+});
+```
+
+## 💰 Automatický Výpočet Ceny
+
+Widget podporuje automatický výpočet ceny s možností volby mezi pevnou cenou a dynamickými cenami z API. Po výběru termínu se pod kalendářem automaticky zobrazí:
+
+- **Rozpis ceny** - detailní rozpis podle strategie ceny
+- **Celková cena** - součet za celý pobyt
+- **Formátování** - cena je zobrazena s oddělovači tisíců a měnou
+- **Zdroj ceny** - indikace, zda cena pochází z API nebo fallback
+
+### Strategie cen
+
+#### 1. Pevná cena (`pricingStrategy: 'fixed'`)
+```javascript
+BHC.createCalendar({
+  container: '#hotel-calendar',
+  apiBase: 'https://amazing-api.better-hotel.com/api/public',
+  clientId: '1441',
+  pricePerNight: 1500, // 1500 CZK za noc
+  pricingStrategy: 'fixed',
+  currency: 'CZK',
   locale: 'cs-CZ'
 });
 ```
+
+#### 2. Dynamické ceny z API (`pricingStrategy: 'api'`)
+```javascript
+BHC.createCalendar({
+  container: '#hotel-calendar',
+  apiBase: 'https://amazing-api.better-hotel.com/api/public',
+  clientId: '1441',
+  pricePerNight: 1000, // Fallback cena za noc
+  pricingStrategy: 'api',
+  currency: 'CZK',
+  locale: 'cs-CZ'
+});
+```
+
+### Zobrazení ceny
+
+#### Pevná cena
+- **Rozpis:** "3 noci × 1 000 CZK = 3 000 CZK"
+- **Celková cena:** "Celková cena: 3 000 CZK"
+
+#### Dynamické ceny z API
+- **Rozpis:** Detailní rozpis každého dne nebo skupin dnů se stejnou cenou
+- **Celková cena:** "Celková cena: 3 200 CZK"
+- **Zdroj:** "Cena z API" nebo "Cena z fallback"
+
+### Fallback mechanismus
+
+Při použití `pricingStrategy: 'api'`:
+- Pokud API obsahuje ceny pro všechny dny → použije se API cena
+- Pokud API neobsahuje cenu pro některé dny → použije se `pricePerNight` jako fallback
+- Pokud API není dostupné → použije se pouze `pricePerNight`
+
+### Lokalizace
+
+Texty pro cenu jsou lokalizované:
+
+- **Čeština:** "Celková cena", "za noc", "Cena z API", "Cena z fallback"
+- **Angličtina:** "Total price", "per night", "Price from API", "Fallback price"
 
 ## 🎨 UX Specifikace - Kalendář ve stylu Booking.com
 
@@ -201,10 +264,11 @@ Cílem je minimalizovat počet kroků, předejít chybám a vizuálně jasně vy
 | `persons` | number | `2` | Number of guests |
 | `currency` | string | `'CZK'` | Currency code (CZK, EUR, USD) |
 | `locale` | string | `'cs-CZ'` | Locale (cs-CZ, en-US) |
+| `pricePerNight` | number | `1000` | Fixed price per night for automatic calculation |
+| `pricingStrategy` | string | `'fixed'` | Pricing strategy: 'fixed' or 'api' |
 | `minNights` | number | `1` | Minimum stay length |
 | `maxNights` | number | `30` | Maximum stay length |
 | `cacheTtlMs` | number | `2700000` | Cache TTL in milliseconds (45 min) |
-| `pricingStrategy` | string | `'quote'` | Pricing method: 'quote' or 'sum_nightly' |
 
 ### Example Configuration
 

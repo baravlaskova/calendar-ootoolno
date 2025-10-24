@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Price Calculation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .test-section h2 {
+            color: #34495e;
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .calendar-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .info-box {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .info-box h4 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        
+        .test-instructions {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .test-instructions h4 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .test-instructions ol {
+            margin: 10px 0;
+        }
+        
+        .test-instructions li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Automatického Výpočtu Ceny</h1>
+        
+        <div class="test-section">
+            <h2>📅 Kalendář s Výpočtem Ceny</h2>
+            <p>Kalendář s automatickým výpočtem ceny za noc (1000 CZK za noc).</p>
+            
+            <div class="calendar-container">
+                <div id="bhc-calendar"></div>
+            </div>
+            
+            <div class="info-box">
+                <h4>💡 Jak testovat</h4>
+                <p>Vyberte datum příjezdu a odjezdu. Pod kalendářem se automaticky zobrazí výpočet ceny.</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📋 Testovací scénáře</h2>
+            <div class="test-instructions">
+                <h4>Doporučené testy:</h4>
+                <ol>
+                    <li><strong>Výběr 1 noci</strong> - Vyberte dva po sobě jdoucí dny → měla by se zobrazit cena 1 000 CZK</li>
+                    <li><strong>Výběr 3 nocí</strong> - Vyberte rozsah 3 nocí → měla by se zobrazit cena 3 000 CZK</li>
+                    <li><strong>Výběr přes hranici měsíce</strong> - Vyberte datum příjezdu na konci měsíce a odjezdu na začátku dalšího</li>
+                    <li><strong>Vymazání výběru</strong> - Klikněte na "Vymazat" → cena by měla zmizet</li>
+                    <li><strong>Nový výběr</strong> - Po vymazání vyberte nový termín → cena by se měla přepočítat</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>⚙️ Konfigurace</h2>
+            <p>Aktuální nastavení:</p>
+            <ul>
+                <li><strong>Cena za noc:</strong> 1000 CZK</li>
+                <li><strong>Měna:</strong> CZK</li>
+                <li><strong>Lokalizace:</strong> cs-CZ</li>
+                <li><strong>Minimální pobyt:</strong> 1 noc</li>
+                <li><strong>Maximální pobyt:</strong> 30 nocí</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Load the widget -->
+    <link rel="stylesheet" href="src/styles.css">
+    <script type="module" src="src/bhc-widget.js"></script>
+    <script type="module">
+        // Initialize the calendar with price calculation
+        const calendar = BHC.createCalendar({
+            container: '#bhc-calendar',
+            apiBase: 'https://amazing-api.better-hotel.com/api/public',
+            clientId: '1779',
+            persons: 2,
+            currency: 'CZK',
+            locale: 'cs-CZ',
+            pricePerNight: 1000 // Pevná cena za noc
+        });
+        
+        console.log('🧪 Test kalendáře s výpočtem ceny inicializován');
+    </script>
+</body>
+</html>

@@ -88,6 +88,7 @@ export class CalendarRenderer {
       
       <div class="bhc-info">
         <div class="bhc-selection"></div>
+        <div class="bhc-price-calculation"></div>
         <div class="bhc-error"></div>
         <div class="bhc-legend">
           <div class="bhc-legend-item">
@@ -111,6 +112,7 @@ export class CalendarRenderer {
     this.updateMonthYear(state);
     this.updateDays(state);
     this.updateSelection(state);
+    this.updatePriceCalculation(state);
   }
 
   /**
@@ -396,6 +398,136 @@ export class CalendarRenderer {
         </div>
       `;
     }
+  }
+
+  /**
+   * Update price calculation display
+   * @param {Object} state
+   */
+  updatePriceCalculation(state) {
+    const priceContainer = this.element.querySelector('.bhc-price-calculation');
+    
+    if (state.startDate && state.endDate && state.nights > 0) {
+      const nights = state.nights;
+      const nightsText = nights === 1 ? 
+        getText(this.config.locale, 'night') : 
+        nights < 5 ? getText(this.config.locale, 'nights2to4') : 
+        getText(this.config.locale, 'nights');
+      
+      let priceHTML = '';
+      
+      if (state.pricingStrategy === 'api' && state.priceBreakdown && state.priceBreakdown.length > 0) {
+        // API pricing with detailed breakdown
+        priceHTML = this.renderApiPriceBreakdown(state, nightsText);
+      } else {
+        // Fixed pricing
+        priceHTML = this.renderFixedPriceBreakdown(state, nightsText);
+      }
+      
+      priceContainer.innerHTML = `
+        <div class="bhc-price-calculation-content">
+          <div class="bhc-price-breakdown">
+            ${priceHTML}
+          </div>
+          <div class="bhc-total-price">
+            <strong>${getText(this.config.locale, 'totalPrice')}: ${state.totalPrice.toLocaleString()} ${this.config.currency}</strong>
+            ${state.pricingStrategy === 'api' && state.hasApiPrices ? 
+              `<div class="bhc-price-source">${getText(this.config.locale, 'priceFromApi')}</div>` : 
+              state.pricingStrategy === 'fallback' ? 
+                `<div class="bhc-price-source">${getText(this.config.locale, 'priceFallback')}</div>` : 
+                ''}
+          </div>
+        </div>
+      `;
+      priceContainer.style.display = 'block';
+    } else {
+      priceContainer.style.display = 'none';
+    }
+  }
+
+  /**
+   * Render API price breakdown
+   * @param {Object} state
+   * @param {string} nightsText
+   * @returns {string}
+   */
+  renderApiPriceBreakdown(state, nightsText) {
+    const breakdown = state.priceBreakdown || [];
+    let html = '';
+    
+    // Group consecutive days with same price
+    const groupedPrices = this.groupConsecutivePrices(breakdown);
+    
+    groupedPrices.forEach(group => {
+      if (group.nights === 1) {
+        html += `
+          <div class="bhc-price-item">
+            <span class="bhc-price-label">${this.formatDateLocale(group.startDate, this.config.locale)}</span>
+            <span class="bhc-price-value">${group.price.toLocaleString()} ${this.config.currency}</span>
+          </div>
+        `;
+      } else {
+        html += `
+          <div class="bhc-price-item">
+            <span class="bhc-price-label">${group.nights} ${nightsText} × ${group.price.toLocaleString()} ${this.config.currency}</span>
+            <span class="bhc-price-value">${group.total.toLocaleString()} ${this.config.currency}</span>
+          </div>
+        `;
+      }
+    });
+    
+    return html;
+  }
+
+  /**
+   * Render fixed price breakdown
+   * @param {Object} state
+   * @param {string} nightsText
+   * @returns {string}
+   */
+  renderFixedPriceBreakdown(state, nightsText) {
+    const pricePerNight = this.config.pricePerNight || 1000;
+    
+    return `
+      <div class="bhc-price-item">
+        <span class="bhc-price-label">${state.nights} ${nightsText} × ${pricePerNight.toLocaleString()} ${this.config.currency}</span>
+        <span class="bhc-price-value">${state.totalPrice.toLocaleString()} ${this.config.currency}</span>
+      </div>
+    `;
+  }
+
+  /**
+   * Group consecutive days with same price
+   * @param {Array} breakdown
+   * @returns {Array}
+   */
+  groupConsecutivePrices(breakdown) {
+    if (!breakdown || breakdown.length === 0) return [];
+    
+    const groups = [];
+    let currentGroup = null;
+    
+    breakdown.forEach(item => {
+      if (!currentGroup || currentGroup.price !== item.price || currentGroup.source !== item.source) {
+        // Start new group
+        currentGroup = {
+          startDate: item.date,
+          endDate: item.date,
+          price: item.price,
+          source: item.source,
+          nights: 1,
+          total: item.price
+        };
+        groups.push(currentGroup);
+      } else {
+        // Extend current group
+        currentGroup.endDate = item.date;
+        currentGroup.nights++;
+        currentGroup.total += item.price;
+      }
+    });
+    
+    return groups;
   }
 
 

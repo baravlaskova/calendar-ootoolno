@@ -26,7 +26,7 @@ class BetterHotelCalendar {
     this.config = this.mergeConfig(config);
     
     // Initialize state manager
-    this.stateManager = new StateManager();
+    this.stateManager = new StateManager({}, this.config);
     
     // Initialize services
     this.apiService = new ApiService(this.config);
@@ -115,6 +115,8 @@ class BetterHotelCalendar {
       minNights: 1,
       maxNights: 30,
       cacheTtlMs: 24 * 60 * 60 * 1000, // 24 hodines
+      pricePerNight: 1000, // Pevná cena za noc v CZK
+      pricingStrategy: 'fixed', // 'fixed' nebo 'api'
     };
     
     return { ...defaults, ...userConfig };

@@ -7,7 +7,8 @@
  * State Manager Class
  */
 export class StateManager {
-  constructor(initialState = {}) {
+  constructor(initialState = {}, config = {}) {
+    this.config = config;
     this.state = {
       startDate: null,
       endDate: null,
@@ -18,6 +19,11 @@ export class StateManager {
       error: null,
       hoverStartDate: null,
       hoverEndDate: null,
+      nights: 0,
+      totalPrice: 0,
+      priceBreakdown: [],
+      pricingStrategy: 'fixed',
+      hasApiPrices: false,
       ...initialState
     };
     
@@ -91,10 +97,130 @@ export class StateManager {
    * @param {Date|null} endDate
    */
   setDateSelection(startDate, endDate) {
+    const nights = this.calculateNights(startDate, endDate);
+    const availability = this.state.availability;
+    const priceCalculation = this.calculateTotalPrice(nights, startDate, endDate, availability);
+    
     this.update({
       startDate,
       endDate,
+      nights,
+      totalPrice: priceCalculation.totalPrice,
+      priceBreakdown: priceCalculation.priceBreakdown,
+      pricingStrategy: priceCalculation.pricingStrategy,
+      hasApiPrices: priceCalculation.hasApiPrices
     });
+  }
+
+  /**
+   * Calculate number of nights between dates
+   * @param {Date|null} startDate
+   * @param {Date|null} endDate
+   * @returns {number}
+   */
+  calculateNights(startDate, endDate) {
+    if (!startDate || !endDate) return 0;
+    const timeDiff = endDate.getTime() - startDate.getTime();
+    return Math.ceil(timeDiff / (1000 * 3600 * 24));
+  }
+
+  /**
+   * Calculate total price based on nights and pricing strategy
+   * @param {number} nights
+   * @param {Date} startDate
+   * @param {Date} endDate
+   * @param {Map} availability
+   * @returns {Object} - { totalPrice, priceBreakdown, pricingStrategy }
+   */
+  calculateTotalPrice(nights, startDate, endDate, availability) {
+    const pricingStrategy = this.config.pricingStrategy || 'fixed';
+    
+    if (pricingStrategy === 'api' && availability && startDate && endDate) {
+      return this.calculateApiPrice(nights, startDate, endDate, availability);
+    } else {
+      return this.calculateFixedPrice(nights);
+    }
+  }
+
+  /**
+   * Calculate price using API data
+   * @param {number} nights
+   * @param {Date} startDate
+   * @param {Date} endDate
+   * @param {Map} availability
+   * @returns {Object}
+   */
+  calculateApiPrice(nights, startDate, endDate, availability) {
+    const priceBreakdown = [];
+    let totalPrice = 0;
+    let hasApiPrices = false;
+    
+    const current = new Date(startDate);
+    while (current < endDate) {
+      const dateStr = this.formatDate(current);
+      const dayData = availability.get(dateStr);
+      
+      if (dayData && dayData.price > 0) {
+        priceBreakdown.push({
+          date: new Date(current),
+          price: dayData.price,
+          source: 'api'
+        });
+        totalPrice += dayData.price;
+        hasApiPrices = true;
+      } else {
+        // Fallback to fixed price for missing API data
+        const fallbackPrice = this.config.pricePerNight || 1000;
+        priceBreakdown.push({
+          date: new Date(current),
+          price: fallbackPrice,
+          source: 'fallback'
+        });
+        totalPrice += fallbackPrice;
+      }
+      
+      current.setDate(current.getDate() + 1);
+    }
+    
+    return {
+      totalPrice,
+      priceBreakdown,
+      pricingStrategy: hasApiPrices ? 'api' : 'fallback',
+      hasApiPrices
+    };
+  }
+
+  /**
+   * Calculate price using fixed price per night
+   * @param {number} nights
+   * @returns {Object}
+   */
+  calculateFixedPrice(nights) {
+    const pricePerNight = this.config.pricePerNight || 1000;
+    const totalPrice = nights * pricePerNight;
+    
+    return {
+      totalPrice,
+      priceBreakdown: [{
+        price: pricePerNight,
+        nights: nights,
+        source: 'fixed'
+      }],
+      pricingStrategy: 'fixed',
+      hasApiPrices: false
+    };
+  }
+
+  /**
+   * Format date to YYYY-MM-DD string
+   * @param {Date} date
+   * @returns {string}
+   */
+  formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   /**
@@ -158,7 +284,12 @@ export class StateManager {
       startDate: null,
       endDate: null,
       hoverStartDate: null,
-      hoverEndDate: null
+      hoverEndDate: null,
+      nights: 0,
+      totalPrice: 0,
+      priceBreakdown: [],
+      pricingStrategy: 'fixed',
+      hasApiPrices: false
     });
   }
 
@@ -182,7 +313,12 @@ export class StateManager {
       calculating: false,
       error: null,
       hoverStartDate: null,
-      hoverEndDate: null
+      hoverEndDate: null,
+      nights: 0,
+      totalPrice: 0,
+      priceBreakdown: [],
+      pricingStrategy: 'fixed',
+      hasApiPrices: false
     };
     
     this.update(initialState);

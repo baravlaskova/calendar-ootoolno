@@ -439,6 +439,61 @@
   text-align: center;
 }
 
+/* Price Calculation */
+.bhc-price-calculation {
+  margin: 12px 0;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  display: none;
+}
+
+.bhc-price-calculation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bhc-price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bhc-price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.bhc-price-label {
+  color: #64748b;
+}
+
+.bhc-price-value {
+  font-weight: 500;
+  color: #374151;
+}
+
+.bhc-total-price {
+  padding: 8px 12px;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.bhc-price-source {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 4px;
+  font-style: italic;
+}
+
 
 .bhc-error {
   padding: 8px 12px;
@@ -706,6 +761,24 @@
     background: #1e3a8a;
     border-color: #3b82f6;
     color: #93c5fd;
+  }
+  
+  .bhc-price-calculation {
+    background: #111827;
+    border-color: #374151;
+  }
+  
+  .bhc-price-label {
+    color: #9ca3af;
+  }
+  
+  .bhc-price-value {
+    color: #f9fafb;
+  }
+  
+  .bhc-total-price {
+    background: #3b82f6;
+    color: #fff;
   }
   
   
