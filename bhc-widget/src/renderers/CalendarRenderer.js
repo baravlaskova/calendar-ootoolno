@@ -430,20 +430,17 @@ export class CalendarRenderer {
             ${priceHTML}
           </div>
           <div class="bhc-booking-section">
-            <div class="bhc-total-price">
-              <strong>${getText(this.config.locale, 'totalPrice')}: ${state.totalPrice.toLocaleString()} ${this.config.currency}</strong>
-              ${state.pricingStrategy === 'api' && state.hasApiPrices ? 
-                `<div class="bhc-price-source">${getText(this.config.locale, 'priceFromApi')}</div>` : 
-                state.pricingStrategy === 'fallback' ? 
-                  `<div class="bhc-price-source">${getText(this.config.locale, 'priceFallback')}</div>` : 
-                  ''}
-            </div>
             <a href="${this.buildBookingUrl(state)}" class="bhc-btn bhc-btn-booking" target="_blank">
               ${getText(this.config.locale, 'bookingButton', { 
                 price: state.totalPrice.toLocaleString(), 
                 currency: this.config.currency 
               })}
             </a>
+            ${state.pricingStrategy === 'api' && state.hasApiPrices ? 
+              `<div class="bhc-price-source">${getText(this.config.locale, 'priceFromApi')}</div>` : 
+              state.pricingStrategy === 'fallback' ? 
+                `<div class="bhc-price-source">${getText(this.config.locale, 'priceFallback')}</div>` : 
+                ''}
           </div>
         </div>
       `;

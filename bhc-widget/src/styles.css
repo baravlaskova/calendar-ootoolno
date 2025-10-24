@@ -484,15 +484,6 @@
   gap: 8px;
 }
 
-.bhc-total-price {
-  padding: 8px 12px;
-  background: #3b82f6;
-  color: #fff;
-  border-radius: 4px;
-  text-align: center;
-  font-size: 14px;
-}
-
 .bhc-btn-booking {
   background: #10b981;
   color: #fff;
@@ -797,11 +788,6 @@
   
   .bhc-price-value {
     color: #f9fafb;
-  }
-  
-  .bhc-total-price {
-    background: #3b82f6;
-    color: #fff;
   }
   
   .bhc-btn-booking {
