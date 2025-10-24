@@ -117,6 +117,7 @@ class BetterHotelCalendar {
       cacheTtlMs: 24 * 60 * 60 * 1000, // 24 hodines
       pricePerNight: 1000, // Pevná cena za noc v CZK
       pricingStrategy: 'fixed', // 'fixed' nebo 'api'
+      bookingUrl: 'https://booking.example.com', // URL rezervačního systému
     };
     
     return { ...defaults, ...userConfig };

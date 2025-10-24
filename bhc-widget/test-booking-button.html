@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Rezervačního Tlačítka</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .test-section h2 {
+            color: #34495e;
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .calendar-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .info-box {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .info-box h4 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        
+        .test-instructions {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .test-instructions h4 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .test-instructions ol {
+            margin: 10px 0;
+        }
+        
+        .test-instructions li {
+            margin: 8px 0;
+        }
+        
+        .url-display {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Rezervačního Tlačítka</h1>
+        
+        <div class="test-section">
+            <h2>📅 Kalendář s Rezervačním Tlačítkem</h2>
+            <p>Tento test ověřuje funkčnost rezervačního tlačítka, které se zobrazí po výběru termínu.</p>
+            
+            <div class="calendar-container">
+                <div id="bhc-calendar"></div>
+            </div>
+            
+            <div class="info-box">
+                <h4>💡 Jak testovat</h4>
+                <p>1. Vyberte datum příjezdu kliknutím na dostupný den</p>
+                <p>2. Vyberte datum odjezdu kliknutím na další dostupný den</p>
+                <p>3. Pod kalendářem se zobrazí rezervační tlačítko s cenou</p>
+                <p>4. Klikněte na rezervační tlačítko - mělo by otevřít novou záložku s URL obsahující parametry</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔗 Očekávané URL parametry</h2>
+            <p>Rezervační tlačítko by mělo generovat URL s následujícími parametry:</p>
+            
+            <div class="url-display">
+https://booking.example.com?checkin=YYYY-MM-DD&checkout=YYYY-MM-DD&guests=2&currency=CZK
+            </div>
+            
+            <div class="test-instructions">
+                <h4>Parametry URL:</h4>
+                <ul>
+                    <li><strong>checkin</strong> - Datum příjezdu ve formátu YYYY-MM-DD</li>
+                    <li><strong>checkout</strong> - Datum odjezdu ve formátu YYYY-MM-DD</li>
+                    <li><strong>guests</strong> - Počet osob (z konfigurace)</li>
+                    <li><strong>currency</strong> - Měna (z konfigurace)</li>
+                    <li><strong>unit</strong> - ID jednotky (pokud je specifikováno)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>✅ Testovací scénáře</h2>
+            <div class="test-instructions">
+                <h4>Doporučené testy:</h4>
+                <ol>
+                    <li><strong>Základní funkce</strong> - Vyberte jakýkoliv dostupný termín a klikněte na rezervační tlačítko</li>
+                    <li><strong>Různé délky pobytu</strong> - Otestujte pobyty různých délek (1 noc, 3 noci, týden)</li>
+                    <li><strong>Přes hranici měsíce</strong> - Vyberte termín přesahující do dalšího měsíce</li>
+                    <li><strong>Různé měny</strong> - Změňte měnu v demo ovládacích prvcích a ověřte, že se správně předává</li>
+                    <li><strong>Různý počet osob</strong> - Změňte počet osob a ověřte parametr guests</li>
+                    <li><strong>Lokalizace</strong> - Přepněte mezi češtinou a angličtinou a ověřte text tlačítka</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🐛 Známé problémy</h2>
+            <div class="test-instructions">
+                <h4>Co kontrolovat:</h4>
+                <ul>
+                    <li>Rezervační tlačítko se zobrazuje pouze po výběru obou dat</li>
+                    <li>URL se generuje správně s aktuálními daty</li>
+                    <li>Tlačítko otevírá novou záložku (target="_blank")</li>
+                    <li>Text tlačítka obsahuje správnou cenu a měnu</li>
+                    <li>Styly tlačítka jsou správně aplikovány</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Load the widget -->
+    <link rel="stylesheet" href="src/styles.css">
+    <script type="module" src="src/bhc-widget.js"></script>
+    <script type="module">
+        // Initialize the calendar widget when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if BHC is available
+            if (typeof window.BHC === 'undefined') {
+                console.error('BetterHotel Calendar Widget not loaded');
+                return;
+            }
+
+            // Create calendar instance with booking URL
+            const calendar = window.BHC.createCalendar({
+                container: '#bhc-calendar',
+                apiBase: 'https://amazing-api.better-hotel.com/api/public',
+                endpoints: {
+                    availability: '/availability'
+                },
+                clientId: '1441',
+                unitId: null,
+                persons: 2,
+                currency: 'CZK',
+                locale: 'cs-CZ',
+                minNights: 1,
+                maxNights: 30,
+                cacheTtlMs: 24 * 60 * 60 * 1000,
+                bookingUrl: 'https://booking.example.com' // Test URL
+            });
+
+            // Store reference for debugging
+            window.testCalendar = calendar;
+            
+            // Log booking URL when dates are selected
+            calendar.stateManager.subscribe('endDate', (endDate) => {
+                if (endDate) {
+                    const startDate = calendar.stateManager.get('startDate');
+                    if (startDate) {
+                        const bookingUrl = calendar.renderer.buildBookingUrl(calendar.stateManager.getState());
+                        console.log('Generated booking URL:', bookingUrl);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

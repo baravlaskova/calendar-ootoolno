@@ -429,13 +429,21 @@ export class CalendarRenderer {
           <div class="bhc-price-breakdown">
             ${priceHTML}
           </div>
-          <div class="bhc-total-price">
-            <strong>${getText(this.config.locale, 'totalPrice')}: ${state.totalPrice.toLocaleString()} ${this.config.currency}</strong>
-            ${state.pricingStrategy === 'api' && state.hasApiPrices ? 
-              `<div class="bhc-price-source">${getText(this.config.locale, 'priceFromApi')}</div>` : 
-              state.pricingStrategy === 'fallback' ? 
-                `<div class="bhc-price-source">${getText(this.config.locale, 'priceFallback')}</div>` : 
-                ''}
+          <div class="bhc-booking-section">
+            <div class="bhc-total-price">
+              <strong>${getText(this.config.locale, 'totalPrice')}: ${state.totalPrice.toLocaleString()} ${this.config.currency}</strong>
+              ${state.pricingStrategy === 'api' && state.hasApiPrices ? 
+                `<div class="bhc-price-source">${getText(this.config.locale, 'priceFromApi')}</div>` : 
+                state.pricingStrategy === 'fallback' ? 
+                  `<div class="bhc-price-source">${getText(this.config.locale, 'priceFallback')}</div>` : 
+                  ''}
+            </div>
+            <a href="${this.buildBookingUrl(state)}" class="bhc-btn bhc-btn-booking" target="_blank">
+              ${getText(this.config.locale, 'bookingButton', { 
+                price: state.totalPrice.toLocaleString(), 
+                currency: this.config.currency 
+              })}
+            </a>
           </div>
         </div>
       `;
@@ -633,6 +641,51 @@ export class CalendarRenderer {
     return true;
   }
 
+
+  /**
+   * Build booking URL with check-in and check-out parameters
+   * @param {Object} state
+   * @returns {string}
+   */
+  buildBookingUrl(state) {
+    if (!state.startDate || !state.endDate) {
+      return '#';
+    }
+    
+    // Format dates as YYYY-MM-DD
+    const checkIn = this.formatDateForUrl(state.startDate);
+    const checkOut = this.formatDateForUrl(state.endDate);
+    
+    // Get booking URL from config or use default
+    const baseUrl = this.config.bookingUrl || 'https://booking.example.com';
+    
+    // Build URL with parameters
+    const params = new URLSearchParams({
+      checkin: checkIn,
+      checkout: checkOut,
+      guests: this.config.persons || 2,
+      currency: this.config.currency || 'CZK'
+    });
+    
+    // Add unit ID if specified
+    if (this.config.unitId) {
+      params.set('unit', this.config.unitId);
+    }
+    
+    return `${baseUrl}?${params.toString()}`;
+  }
+
+  /**
+   * Format date for URL parameter (YYYY-MM-DD)
+   * @param {Date} date
+   * @returns {string}
+   */
+  formatDateForUrl(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   /**
    * Get the rendered element

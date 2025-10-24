@@ -478,6 +478,12 @@
   color: #374151;
 }
 
+.bhc-booking-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .bhc-total-price {
   padding: 8px 12px;
   background: #3b82f6;
@@ -485,6 +491,23 @@
   border-radius: 4px;
   text-align: center;
   font-size: 14px;
+}
+
+.bhc-btn-booking {
+  background: #10b981;
+  color: #fff;
+  border-color: #10b981;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+.bhc-btn-booking:hover:not(:disabled) {
+  background: #059669;
+  border-color: #059669;
+  color: #fff;
 }
 
 .bhc-price-source {
@@ -778,6 +801,18 @@
   
   .bhc-total-price {
     background: #3b82f6;
+    color: #fff;
+  }
+  
+  .bhc-btn-booking {
+    background: #10b981;
+    color: #fff;
+    border-color: #10b981;
+  }
+  
+  .bhc-btn-booking:hover:not(:disabled) {
+    background: #059669;
+    border-color: #059669;
     color: #fff;
   }
   

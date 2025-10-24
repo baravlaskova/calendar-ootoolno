@@ -159,7 +159,8 @@
     persons: 2,
     currency: 'CZK',
     locale: 'cs-CZ',
-    pricePerNight: 1000
+    pricePerNight: 1000,
+    bookingUrl: 'https://your-booking-system.com'
   });
 &lt;/script&gt;
             </div>
@@ -187,7 +188,8 @@ BHC.createCalendar({
   pricePerNight: 1000,                 // Pevná cena za noc
   minNights: 1,                        // Minimální počet nocí
   maxNights: 30,                       // Maximální počet nocí
-  cacheTtlMs: 24*60*60*1000              // Cache TTL (24 hodiny)
+  cacheTtlMs: 24*60*60*1000,           // Cache TTL (24 hodiny)
+  bookingUrl: 'https://booking.example.com' // URL rezervačního systému
 });
             </div>
         </div>
@@ -198,6 +200,7 @@ BHC.createCalendar({
                 <li>Zobrazení dostupnosti z BetterHotel API</li>
                 <li>Výběr rozsahu pobytu (check-in, check-out)</li>
                 <li>Automatický výpočet ceny za noc</li>
+                <li>Rezervační tlačítko s parametry příjezdu/odjezdu</li>
                 <li>Respektování turn-over pravidla</li>
                 <li>Kontrola close_to_arrival na startu</li>
                 <li>Výpočet ceny (quote API + fallback)</li>
@@ -217,6 +220,7 @@ BHC.createCalendar({
                     <li><strong>Výběr přes hranici měsíce</strong> - Vyberte datum příjezdu na konci měsíce a odjezdu na začátku dalšího</li>
                     <li><strong>Checkout-only dny</strong> - Vyberte příjezd a pak klikněte na den s červenou tečkou (•) - měl by být fialový</li>
                     <li><strong>Výpočet ceny</strong> - Vyberte termín a ověřte automatický výpočet ceny pod kalendářem</li>
+                    <li><strong>Rezervační tlačítko</strong> - Vyberte termín a klikněte na rezervační tlačítko - mělo by otevřít externí systém s parametry</li>
                     <li><strong>Fallback pricing</strong> - Pokud quote API selže, měl by se použít sum_nightly</li>
                     <li><strong>Minimální pobyt</strong> - Vyberte pobyt kratší než minNights</li>
                     <li><strong>Lokalizace</strong> - Přepněte mezi češtinou a angličtinou</li>
@@ -242,7 +246,8 @@ BHC.createCalendar({
     persons: 2,
     currency: 'CZK',
     locale: 'cs-CZ',
-    pricePerNight: 1000
+    pricePerNight: 1000,
+    bookingUrl: 'https://your-booking-system.com'
   });
 &lt;/script&gt;
             </div>

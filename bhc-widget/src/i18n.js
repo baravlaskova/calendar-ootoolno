@@ -32,6 +32,8 @@ export const texts = {
     priceCalculation: 'Výpočet ceny',
     priceFromApi: 'Cena z API',
     priceFallback: 'Cena z fallback',
+    bookNow: 'Rezervovat',
+    bookingButton: 'Rezervovat za {price} {currency}',
     
     
     // Errors
@@ -102,6 +104,8 @@ export const texts = {
     priceCalculation: 'Price calculation',
     priceFromApi: 'Price from API',
     priceFallback: 'Fallback price',
+    bookNow: 'Book Now',
+    bookingButton: 'Book for {price} {currency}',
     
     
     // Errors

@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
     locale: 'cs-CZ',
     minNights: 1,
     maxNights: 30,
-    cacheTtlMs: 24 * 60 * 60 * 1000 // 24 hodiny
+    cacheTtlMs: 24 * 60 * 60 * 1000, // 24 hodiny
+    bookingUrl: 'https://booking.example.com' // URL rezervačního systému
   });
 
   // Store reference for debugging
@@ -108,7 +109,8 @@ function addDemoControls() {
       locale: locale,
       minNights: 1,
       maxNights: 30,
-      cacheTtlMs: 24 * 60 * 60 * 1000
+      cacheTtlMs: 24 * 60 * 60 * 1000,
+      bookingUrl: 'https://booking.example.com'
     });
   });
 }
