@@ -1,0 +1,835 @@
+/**
+ * BetterHotel Calendar Widget Styles
+ * Clean, minimal CSS with easy customization
+ */
+
+.bhc-widget {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  background: #fff;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Header */
+.bhc-header {
+  padding: 16px;
+  border-bottom: 1px solid #e1e5e9;
+  background: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+}
+
+.bhc-title {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.bhc-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.bhc-btn {
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #fff;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+}
+
+.bhc-btn:hover:not(:disabled) {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.bhc-btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.bhc-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f9fafb;
+}
+
+.bhc-btn-calculate {
+  background: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
+}
+
+.bhc-btn-calculate:hover:not(:disabled) {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.bhc-btn-clear {
+  background: #6b7280;
+  color: #fff;
+  border-color: #6b7280;
+}
+
+.bhc-btn-clear:hover:not(:disabled) {
+  background: #4b5563;
+  border-color: #4b5563;
+}
+
+.bhc-btn-refresh {
+  background: #10b981;
+  color: #fff;
+  border-color: #10b981;
+}
+
+.bhc-btn-refresh:hover:not(:disabled) {
+  background: #059669;
+  border-color: #059669;
+}
+
+.bhc-btn-nav {
+  padding: 8px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  min-width: 40px;
+}
+
+/* Calendar Container */
+.bhc-calendar-container {
+  padding: 12px;
+}
+
+.bhc-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.bhc-month-year {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Month Pair Display */
+.bhc-month-pair {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.bhc-month-item {
+  flex: 1;
+  text-align: center;
+}
+
+.bhc-month-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Two Month Grid */
+.bhc-month-grid {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+
+.bhc-month-calendar {
+  flex: 1;
+  min-width: 0;
+}
+
+.bhc-month-calendar .bhc-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  margin-bottom: 8px;
+}
+
+.bhc-month-calendar .bhc-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  grid-auto-rows: minmax(28px, auto);
+}
+
+.bhc-weekday {
+  padding: 8px 4px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  background: #f8f9fa;
+}
+
+.bhc-day-empty {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+}
+
+.bhc-day {
+  position: relative;
+  padding: 6px 2px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+}
+
+.bhc-day:hover:not(.bhc-day-disabled):not(.bhc-day-loading) {
+  background: #f3f4f6;
+}
+
+.bhc-day:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.bhc-day-number {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Day States */
+.bhc-day-other-month {
+  color: #d1d5db;
+}
+
+.bhc-day-today {
+  border: 2px solid #3b82f6;
+  background: #fff;
+  color: #374151;
+}
+
+.bhc-day-today .bhc-day-number {
+  font-weight: 600;
+}
+
+.bhc-day-available {
+  color: #374151;
+}
+
+.bhc-day-available:hover {
+  background: #f3f4f6;
+  color: #374151;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.bhc-day-past {
+  color: #d1d5db;
+  cursor: not-allowed;
+  background: #f9fafb;
+}
+
+.bhc-day-unavailable {
+  color: #6b7280;
+  cursor: not-allowed;
+  background: #f9fafb;
+}
+
+.bhc-day-no-arrival {
+  color: #6b7280;
+  cursor: not-allowed;
+  background: #f9fafb;
+}
+
+.bhc-day-checkout-only {
+  color: #7c3aed !important;
+  cursor: pointer !important;
+  background: #f3f4f6 !important;
+  border: 1px solid #a78bfa !important;
+}
+
+.bhc-day-checkout-only:hover {
+  background: #ede9fe !important;
+  color: #5b21b6 !important;
+  border-color: #7c3aed !important;
+}
+
+/* Disabled states */
+.bhc-day-disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+  background: #f9fafb;
+  opacity: 0.6;
+}
+
+.bhc-day-disabled-checkin {
+  color: #6b7280;
+  cursor: pointer;
+  background: #f3f4f6;
+  border: 1px dashed #9ca3af;
+  opacity: 0.8;
+}
+
+.bhc-day-disabled-checkin:hover {
+  background: #e5e7eb;
+  color: #374151;
+  border-color: #6b7280;
+  opacity: 1;
+}
+
+/* Out of range states */
+.bhc-day-out-of-range {
+  color: #000;
+  cursor: default;
+  background: #fff;
+  opacity: 0.7;
+}
+
+.bhc-day-out-of-range-checkin {
+  color: #6b7280;
+  cursor: pointer;
+  background: #f3f4f6;
+  border: 1px dashed #9ca3af;
+  opacity: 0.8;
+}
+
+.bhc-day-out-of-range-checkin:hover {
+  background: #e5e7eb;
+  color: #374151;
+  border-color: #6b7280;
+  opacity: 1;
+}
+
+/* Hover Range Preview */
+.bhc-day-hover-start {
+  background: #dbeafe;
+  color: #1e40af;
+  border-radius: 4px;
+}
+
+.bhc-day-hover-start .bhc-day-number {
+  font-weight: 600;
+}
+
+.bhc-day-hover-range {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.bhc-day-hover-range .bhc-day-number {
+  font-weight: 600;
+}
+
+/* Selection States */
+.bhc-day-selected-start {
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.bhc-day-selected-start .bhc-day-number {
+  font-weight: 700;
+}
+
+.bhc-day-selected-end {
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.bhc-day-selected-end .bhc-day-number {
+  font-weight: 700;
+}
+
+.bhc-day-in-range {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.bhc-day-in-range .bhc-day-number {
+  font-weight: 600;
+}
+
+/* No-arrival indicator */
+.bhc-dot-no-arrival {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 10px;
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* Info Section */
+.bhc-info {
+  padding: 16px;
+  border-top: 1px solid #e1e5e9;
+  background: #f8f9fa;
+  border-radius: 0 0 8px 8px;
+}
+
+.bhc-selection {
+  margin-bottom: 12px;
+}
+
+.bhc-selection-item {
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.bhc-selection-item strong {
+  color: #374151;
+}
+
+.bhc-selection-item em {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.bhc-selection-summary {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #0c4a6e;
+  text-align: center;
+}
+
+/* Price Calculation */
+.bhc-price-calculation {
+  margin: 12px 0;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  display: none;
+}
+
+.bhc-price-calculation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bhc-price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bhc-price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.bhc-price-label {
+  color: #64748b;
+}
+
+.bhc-price-value {
+  font-weight: 500;
+  color: #374151;
+}
+
+.bhc-booking-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bhc-btn-booking {
+  background: #10b981;
+  color: #fff;
+  border-color: #10b981;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+.bhc-btn-booking:hover:not(:disabled) {
+  background: #059669;
+  border-color: #059669;
+  color: #fff;
+}
+
+.bhc-price-source {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+
+.bhc-error {
+  padding: 8px 12px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 4px;
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 12px;
+  display: none;
+  animation: slideIn 0.3s ease-out;
+}
+
+.bhc-error-state {
+  border-color: #fecaca;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bhc-legend {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.bhc-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bhc-legend-dot {
+  font-weight: bold;
+}
+
+/* Loading */
+.bhc-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #6b7280;
+  border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bhc-month-grid {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .bhc-month-pair {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bhc-widget {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  
+  .bhc-header {
+    padding: 12px;
+  }
+  
+  .bhc-calendar-container {
+    padding: 12px;
+  }
+  
+  .bhc-info {
+    padding: 12px;
+  }
+  
+  .bhc-controls {
+    flex-direction: column;
+  }
+  
+  .bhc-btn {
+    width: 100%;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .bhc-widget {
+    background: #1f2937;
+    color: #f9fafb;
+    border-color: #374151;
+  }
+  
+  .bhc-header {
+    background: #111827;
+    border-color: #374151;
+  }
+  
+  .bhc-title {
+    color: #f9fafb;
+  }
+  
+  .bhc-month-year {
+    color: #f9fafb;
+  }
+  
+  .bhc-btn {
+    background: #374151;
+    color: #f9fafb;
+    border-color: #4b5563;
+  }
+  
+  .bhc-btn:hover:not(:disabled) {
+    background: #4b5563;
+    border-color: #6b7280;
+  }
+  
+  .bhc-weekday {
+    background: #111827;
+    color: #9ca3af;
+  }
+  
+  .bhc-day {
+    color: #f9fafb;
+  }
+  
+  .bhc-day:hover:not(.bhc-day-disabled):not(.bhc-day-loading) {
+    background: #374151;
+  }
+  
+  .bhc-day-other-month {
+    color: #4b5563;
+  }
+  
+  .bhc-day-disabled {
+    color: #4b5563;
+    background: #111827;
+  }
+  
+  .bhc-day-past {
+    color: #4b5563;
+    background: #111827;
+  }
+  
+  .bhc-day-loading {
+    color: #6b7280;
+    background: #111827;
+  }
+  
+  .bhc-day-checkout-only {
+    color: #a78bfa !important;
+    background: #1e1b4b !important;
+    border-color: #7c3aed !important;
+  }
+  
+  .bhc-day-checkout-only:hover {
+    background: #312e81 !important;
+    color: #c4b5fd !important;
+    border-color: #8b5cf6 !important;
+  }
+  
+  .bhc-day-disabled {
+    color: #4b5563;
+    background: #111827;
+    opacity: 0.6;
+  }
+  
+  .bhc-day-disabled-checkin {
+    color: #9ca3af;
+    background: #374151;
+    border-color: #6b7280;
+    opacity: 0.8;
+  }
+  
+  .bhc-day-disabled-checkin:hover {
+    background: #4b5563;
+    color: #f9fafb;
+    border-color: #9ca3af;
+    opacity: 1;
+  }
+  
+  .bhc-day-out-of-range {
+    color: #fff;
+    background: #1f2937;
+    opacity: 0.7;
+  }
+  
+  .bhc-day-out-of-range-checkin {
+    color: #9ca3af;
+    background: #374151;
+    border-color: #6b7280;
+    opacity: 0.8;
+  }
+  
+  .bhc-day-out-of-range-checkin:hover {
+    background: #4b5563;
+    color: #f9fafb;
+    border-color: #9ca3af;
+    opacity: 1;
+  }
+  
+  .bhc-day-hover-start {
+    background: #1e3a8a;
+    color: #93c5fd;
+  }
+  
+  .bhc-day-hover-range {
+    background: #1e3a8a;
+    color: #93c5fd;
+  }
+  
+  .bhc-day-selected-start {
+    background: #3b82f6;
+    color: #fff;
+  }
+  
+  .bhc-day-selected-end {
+    background: #3b82f6;
+    color: #fff;
+  }
+  
+  .bhc-day-in-range {
+    background: #1e3a8a;
+    color: #93c5fd;
+  }
+  
+  .bhc-day-today {
+    border-color: #3b82f6;
+    background: #1f2937;
+    color: #f9fafb;
+  }
+  
+  .bhc-info {
+    background: #111827;
+    border-color: #374151;
+  }
+  
+  .bhc-selection-item strong {
+    color: #f9fafb;
+  }
+  
+  .bhc-selection-item em {
+    color: #9ca3af;
+  }
+  
+  .bhc-selection-summary {
+    background: #1e3a8a;
+    border-color: #3b82f6;
+    color: #93c5fd;
+  }
+  
+  .bhc-price-calculation {
+    background: #111827;
+    border-color: #374151;
+  }
+  
+  .bhc-price-label {
+    color: #9ca3af;
+  }
+  
+  .bhc-price-value {
+    color: #f9fafb;
+  }
+  
+  .bhc-btn-booking {
+    background: #10b981;
+    color: #fff;
+    border-color: #10b981;
+  }
+  
+  .bhc-btn-booking:hover:not(:disabled) {
+    background: #059669;
+    border-color: #059669;
+    color: #fff;
+  }
+  
+  
+  .bhc-loading {
+    background: rgba(31, 41, 55, 0.9);
+    color: #9ca3af;
+  }
+  
+  .bhc-error {
+    background: #7f1d1d;
+    border-color: #991b1b;
+    color: #fca5a5;
+  }
+  
+  .bhc-error-state {
+    border-color: #991b1b;
+    box-shadow: 0 0 0 2px rgba(185, 28, 28, 0.2);
+  }
+}
+
+/* Print styles */
+@media print {
+  .bhc-widget {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .bhc-btn {
+    border: 1px solid #000;
+    background: #fff;
+    color: #000;
+  }
+}

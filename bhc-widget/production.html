@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterHotel Calendar Widget - Produkční verze</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .demo-section h2 {
+            color: #34495e;
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .calendar-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .info-box {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .info-box h4 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            margin: 20px 0;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .feature-list li:before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box h4 {
+            margin-top: 0;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏨 BetterHotel Calendar Widget - Produkční verze</h1>
+        
+        <div class="demo-section">
+            <h2>📅 Live Demo s Rezervačním Tlačítkem</h2>
+            <p>Interaktivní kalendář dostupnosti s rezervačním tlačítkem. Vyberte termín a klikněte na rezervační tlačítko pro přechod do externího rezervačního systému.</p>
+            
+            <div class="calendar-container">
+                <div id="bhc-calendar"></div>
+            </div>
+            
+            <div class="info-box">
+                <h4>💡 Nová funkce</h4>
+                <p>Po výběru termínu se zobrazí zelené rezervační tlačítko, které vás přesměruje do externího rezervačního systému s předvyplněnými parametry příjezdu a odjezdu.</p>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🚀 Rychlé začlenění</h2>
+            <p>Přidejte kalendář s rezervačním tlačítkem do své stránky:</p>
+            
+            <div class="code-block">
+&lt;!-- 1. Přidejte CSS a JS soubory --&gt;
+&lt;link rel="stylesheet" href="dist/bhc-widget.css"&gt;
+&lt;script src="dist/bhc-widget.iife.js"&gt;&lt;/script&gt;
+
+&lt;!-- 2. Přidejte kontejner --&gt;
+&lt;div id="my-calendar"&gt;&lt;/div&gt;
+
+&lt;!-- 3. Inicializujte kalendář --&gt;
+&lt;script&gt;
+  BHC.createCalendar({
+    container: '#my-calendar',
+    apiBase: 'https://amazing-api.better-hotel.com/api/public',
+    clientId: '1441',
+    persons: 2,
+    currency: 'CZK',
+    locale: 'cs-CZ',
+    pricePerNight: 1000,
+    bookingUrl: 'https://your-booking-system.com'
+  });
+&lt;/script&gt;
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>⚙️ Konfigurace</h2>
+            <p>Kompletní seznam všech dostupných parametrů:</p>
+            
+            <div class="code-block">
+BHC.createCalendar({
+  // Povinné parametry
+  container: '#bhc-calendar',           // CSS selektor nebo HTMLElement
+  apiBase: 'https://api.example.com', // Základní URL API
+  clientId: '1779',                   // ID klienta
+  
+  // Volitelné parametry
+  endpoints: {                         // API endpointy
+    availability: '/availability'
+  },
+  unitId: null,                        // ID jednotky (pokud je třeba)
+  persons: 2,                         // Počet osob
+  currency: 'CZK',                    // Měna
+  locale: 'cs-CZ',                    // Lokalizace
+  pricePerNight: 1000,                // Pevná cena za noc
+  minNights: 1,                       // Minimální počet nocí
+  maxNights: 30,                      // Maximální počet nocí
+  cacheTtlMs: 24*60*60*1000,          // Cache TTL (24 hodiny)
+  bookingUrl: 'https://booking.example.com' // URL rezervačního systému
+});
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>✨ Funkce</h2>
+            <ul class="feature-list">
+                <li>Zobrazení dostupnosti z BetterHotel API</li>
+                <li>Výběr rozsahu pobytu (check-in, check-out)</li>
+                <li>Automatický výpočet ceny za noc</li>
+                <li><strong>Rezervační tlačítko s parametry příjezdu/odjezdu</strong></li>
+                <li>Respektování turn-over pravidla</li>
+                <li>Kontrola close_to_arrival na startu</li>
+                <li>Výpočet ceny (quote API + fallback)</li>
+                <li>Lokalizace (čeština, angličtina)</li>
+                <li>Přístupnost (ARIA, klávesnice)</li>
+                <li>Responzivní design</li>
+                <li>Cache dostupnosti v paměti</li>
+                <li>Dark mode podpora</li>
+            </ul>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🔗 Rezervační URL parametry</h2>
+            <p>Rezervační tlačítko generuje URL s následujícími parametry:</p>
+            
+            <div class="code-block">
+https://your-booking-system.com?checkin=2025-11-04&checkout=2025-11-07&guests=2&currency=CZK&unit=123
+            </div>
+            
+            <div class="info-box">
+                <h4>Parametry URL:</h4>
+                <ul>
+                    <li><strong>checkin</strong> - Datum příjezdu (YYYY-MM-DD)</li>
+                    <li><strong>checkout</strong> - Datum odjezdu (YYYY-MM-DD)</li>
+                    <li><strong>guests</strong> - Počet osob</li>
+                    <li><strong>currency</strong> - Měna</li>
+                    <li><strong>unit</strong> - ID jednotky (pokud je specifikováno)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="warning-box">
+            <h4>⚠️ Důležité poznámky</h4>
+            <ul>
+                <li>Widget používá veřejné BetterHotel API - žádné tajné klíče</li>
+                <li>Dostupnost se cachuje v paměti pro 24 hodin</li>
+                <li>Rezervační tlačítko se zobrazuje pouze po výběru obou dat</li>
+                <li>URL se generuje automaticky s aktuálními parametry</li>
+                <li>Tlačítko otevírá novou záložku (target="_blank")</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Load the production widget -->
+    <link rel="stylesheet" href="dist/bhc-widget.css">
+    <script src="dist/bhc-widget.iife.js"></script>
+    <script>
+        // Initialize the calendar widget when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if BHC is available
+            if (typeof window.BHC === 'undefined') {
+                console.error('BetterHotel Calendar Widget not loaded');
+                return;
+            }
+
+            // Create calendar instance with booking URL
+            const calendar = window.BHC.createCalendar({
+                container: '#bhc-calendar',
+                apiBase: 'https://amazing-api.better-hotel.com/api/public',
+                endpoints: {
+                    availability: '/availability'
+                },
+                clientId: '1441',
+                unitId: null,
+                persons: 2,
+                currency: 'CZK',
+                locale: 'cs-CZ',
+                minNights: 1,
+                maxNights: 30,
+                cacheTtlMs: 24 * 60 * 60 * 1000,
+                bookingUrl: 'https://booking.example.com' // Demo URL
+            });
+
+            // Store reference for debugging
+            window.productionCalendar = calendar;
+        });
+    </script>
+</body>
+</html>
